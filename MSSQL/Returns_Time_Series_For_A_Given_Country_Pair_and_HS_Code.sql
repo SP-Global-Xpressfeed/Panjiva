@@ -24,7 +24,7 @@ Query_Added_Date:
 23/11/2020
 
 DatasetKey:
-NULL
+22
 
 The following sample query returns time series of trade for a given country pair & HS Code
 
@@ -39,13 +39,13 @@ pcor.countryName as ReportingCountry
 , pun.tradeValue, pun.keyCurrency
 , pun.tradeWeight
 , pun.unitQuantity, punit.panjivaComtradeUnit
- FROM panjivaMacroUNComtrade pun
- left join panjivahscodes phs on phs.keyhs = pun.keyhs
- left join panjivaCountry pcor on pcor.panjivaCountry = pun.panjivaCountryReporting
- left join panjivaCountry pcop on pcop.panjivaCountry = pun.panjivaCountryPartner
- left join panjivaMacroComtradeUnit punit on punit.keyMacroComtradeUnit = pun.keyMacroComtradeUnit
- join panjivaShipmentDirection psd on psd.keyShipmentDirection = pun.keyShipmentDirection
- where pcor.countryName = 'united states' --reporting country
- and pcop.countryName = 'south korea' --partner country--
- and phs.hsCode = '760410' --aluminum bars & rods
- order by ReportingCountry, PartnerCountry, shipmentdirection, tradeDataYear desc, TradeDataMonth desc, hscode
+FROM panjivaMacroUNComtrade pun
+left join panjivahscodes phs on phs.keyhs = pun.keyhs
+left join panjivaCountry pcor on pcor.panjivaCountry = pun.panjivaCountryReporting
+left join panjivaCountry pcop on pcop.panjivaCountry = pun.panjivaCountryPartner
+left join panjivaMacroComtradeUnit punit on punit.keyMacroComtradeUnit = pun.keyMacroComtradeUnit
+join panjivaShipmentDirection psd on psd.keyShipmentDirection = pun.keyShipmentDirection
+where pcor.countryName = 'united states' --reporting country
+and pcop.countryName = 'south korea' --partner country--
+and phs.hsCode = '760410' --aluminum bars & rods
+order by ReportingCountry, PartnerCountry, shipmentdirection, tradeDataYear desc, TradeDataMonth desc, hscode
