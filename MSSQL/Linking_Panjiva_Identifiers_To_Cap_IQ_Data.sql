@@ -22,8 +22,7 @@ Query_Added_Date:
 DatasetKey:
 22
 
-The following sample query links Panjiva identifiers to S&P Capital IQ data.
-Note: Here TOP 100 are shown for better query execution
+The following sample query links Panjiva identifiers to S&P Capital IQ data. Note: Here TOP 100 are shown for better query execution
 
 ***********************************************************************************************/
 
