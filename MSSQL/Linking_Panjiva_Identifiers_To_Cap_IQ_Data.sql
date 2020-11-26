@@ -46,4 +46,4 @@ ON cup.ultimateParentCompanyId = c.companyId
 JOIN xfl_panjiva.dbo.panjivaCompanyCrossRef ccr
 ON ccr.companyId = cup.companyId
 GROUP BY c.companyId, c.companyName, ccr.identifiervalue
-) cco ON im.shpPanjivaId = cco.identifiervalue--
+) cco ON im.shpPanjivaId = cco.identifiervalue
