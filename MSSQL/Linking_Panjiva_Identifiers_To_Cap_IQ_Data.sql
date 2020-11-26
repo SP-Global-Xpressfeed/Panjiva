@@ -26,6 +26,7 @@ The following sample query links Panjiva identifiers to S&P Capital IQ data.
 Note:Here TOP 100 are shown for better query execution
 
 ***********************************************************************************************/
+
 select Top 100 panjivaRecordId, shpPanjivaId, csh.company, csh.ciqID, conPanjivaId, cco.company, cco.ciqID
 from panjivaUSImport2019 im
 left join (
@@ -45,4 +46,4 @@ ON cup.ultimateParentCompanyId = c.companyId
 JOIN xfl_panjiva.dbo.panjivaCompanyCrossRef ccr
 ON ccr.companyId = cup.companyId
 GROUP BY c.companyId, c.companyName, ccr.identifiervalue
-) cco ON im.shpPanjivaId = cco.identifiervalue
+) cco ON im.shpPanjivaId = cco.identifiervalue--
