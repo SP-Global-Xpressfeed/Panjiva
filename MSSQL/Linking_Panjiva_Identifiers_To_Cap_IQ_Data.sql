@@ -26,18 +26,23 @@ The following sample query links Panjiva identifiers to S&P Capital IQ data. Not
 
 ***********************************************************************************************/
 
-select
-a.hsCodeLevel,
-a.hsCodeDescription,
-a.hsCode,
-case
-when a.hsCodeLevel = 2 and len(a.hsCode) = 1 then '0' + a.hsCode + '0000'
-when a.hsCodeLevel = 2 and len(a.hsCode) = 2 then a.hsCode + '0000'
-when a.hsCodeLevel = 4 and len(a.hsCode) = 3 then '0' + a.hsCode + '00'
-when a.hsCodeLevel = 4 and len(a.hsCode) = 4 then a.hsCode + '00'
-when a.hsCodeLevel = 6 and len(a.hsCode) = 5 then '0' + a.hsCode
-when a.hsCodeLevel = 6 and len(a.hsCode) = 6 then a.hsCode
-else null end as hsCodeFull
-from panjivaHSClassification a (nolock)
-where a.hsCode is not null -- remove 1 record
-order by 1, 4
+select Top 100 panjivaRecordId, shpPanjivaId, csh.company, csh.ciqID, conPanjivaId, cco.company, cco.ciqID
+from panjivaUSImport2019 im
+left join (
+SELECT c.companyID as ciqID, c.companyName as company, ccr.identifiervalue
+FROM xfl_ciq.dbo.ciqCompany c
+JOIN xfl_ciq.dbo.ciqCompanyUltimateParent cup
+ON cup.ultimateParentCompanyId = c.companyId
+JOIN xfl_panjiva.dbo.panjivaCompanyCrossRef ccr
+ON ccr.companyId = cup.companyId
+GROUP BY c.companyId, c.companyName, ccr.identifiervalue
+) csh ON im.shpPanjivaId = csh.identifiervalue
+left join (
+SELECT c.companyID as ciqID, c.companyName as company, ccr.identifiervalue
+FROM xfl_ciq.dbo.ciqCompany c
+JOIN xfl_ciq.dbo.ciqCompanyUltimateParent cup
+ON cup.ultimateParentCompanyId = c.companyId
+JOIN xfl_panjiva.dbo.panjivaCompanyCrossRef ccr
+ON ccr.companyId = cup.companyId
+GROUP BY c.companyId, c.companyName, ccr.identifiervalue
+) cco ON im.shpPanjivaId = cco.identifiervalue
